@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Cereal";
+  src: url("/fonts/cereal/AirbnbCerealLight.ttf");
+}
+
 html,
 body {
   width: 100%;
@@ -5,6 +10,7 @@ body {
   margin: 0px;
   padding: 0px;
   overflow-x: hidden;
+  font-family: "Cereal";
 }
 
 /* Scroll Bar */
@@ -73,6 +79,7 @@ body {
 }
 
 .explore-img-container {
+  
 }
 
 ::-webkit-scrollbar-track {
