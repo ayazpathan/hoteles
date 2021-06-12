@@ -11,7 +11,8 @@
   "dependencies": {
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
-    "mongoose": "^5.12.12",
+    "cloudinary": "^1.26.0",
+    "mongoose": "^5.12.4",
     "next": "10.2.3",
     "next-absolute-url": "^1.2.2",
     "next-auth": "^3.26.1",
