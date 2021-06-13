@@ -7,7 +7,7 @@ import {
   CLEAR_ERRORS,
 } from "../constants/userConstants";
 
-// Get all rooms
+// Get all hotel rooms list
 export const registerUser = (userData) => async (dispatch) => {
   try {
     dispatch({ type: REGISTER_USER_REQUEST });
