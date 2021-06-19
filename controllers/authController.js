@@ -56,7 +56,7 @@ const updateProfile = catchAsyncErrors(async (req, res) => {
     if (req.body.password) user.password = req.body.password;
   }
 
-  if (re.body.avatar !== "") {
+  if (req.body.avatar !== "") {
     const image_id = user.avatar.public_id;
 
     // Delete user previous image
