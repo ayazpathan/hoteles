@@ -4,6 +4,11 @@ import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import APIFeatures from "../utils/apiFeatures";
 import cloudinary from "cloudinary";
 
+import sendEmail from "../utils/sendEmails";
+
+import absoluteUrl from "next-absolute-url";
+import next from "next";
+
 // Setting up cludinary config
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -82,4 +87,44 @@ const updateProfile = catchAsyncErrors(async (req, res) => {
   });
 });
 
-export { registerUser, currentUserProfile, updateProfile };
+// Forgot Password => /api/password/forgot
+const forgotPassword = catchAsyncErrors(async (req, res) => {
+  const user = await User.findOneAndReplace({ email: req.body.email });
+
+  if (!user) {
+    return new next(ErrorHandler("User not found with this email"));
+  }
+
+  // Get reset token
+  const resetToken = user.getResetPasswordToken();
+
+  await user.save({ validateBeforeSave: false });
+  // Get origin
+  const { origin } = absoluteUrl(req);
+
+  // Create reset password URL
+  const resetURL = `${origin}/password/reset/${resetToken}`;
+
+  const message = `your password reset URL is as followed: \n\n ${resetURL}\n\n If yu have requested thisemail, then ignore it`;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: "Hoteles Password Recovery",
+      text: message,
+    });
+  } catch (error) {
+    user.getResetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save({ validateBeforeSave: false });
+    return next(new ErrorHandler(error.message, 500));
+  }
+
+  res.status(200).json({
+    success: true,
+    message: `Email sent to ${user.email}`,
+  });
+});
+
+export { registerUser, currentUserProfile, updateProfile, forgotPassword };
