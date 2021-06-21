@@ -88,11 +88,11 @@ const updateProfile = catchAsyncErrors(async (req, res) => {
 });
 
 // Forgot Password => /api/password/forgot
-const forgotPassword = catchAsyncErrors(async (req, res) => {
-  const user = await User.findOneAndReplace({ email: req.body.email });
+const forgotPassword = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
-    return new next(ErrorHandler("User not found with this email"));
+    return next(new ErrorHandler("User not found with this email"));
   }
 
   // Get reset token
