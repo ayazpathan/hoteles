@@ -109,7 +109,17 @@ export const forgotPasswordReducer = (state = {}, action) => {
         loading: false,
         message: action.payload,
       };
+    case RESET_PASSWORD_SUCCESS:
+      return {
+        loading: false,
+        message: action.payload,
+      };
     case FORGOT_PASSWORD_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case RESET_PASSWORD_FAIL:
       return {
         loading: false,
         error: action.payload,
