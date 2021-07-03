@@ -98,7 +98,7 @@ export const userReducer = (state = {}, action) => {
 };
 
 // Forgot Password reducer
-/*user can recover password from here TEST COMMENTS */
+/*user can recover password from here */
 export const forgotPasswordReducer = (state = {}, action) => {
   switch (action.type) {
     case FORGOT_PASSWORD_REQUEST:
