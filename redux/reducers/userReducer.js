@@ -1,7 +1,3 @@
-/*
- * This is the main reducer file for the project
- */
-
 import {
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
