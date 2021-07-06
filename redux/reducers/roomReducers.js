@@ -1,3 +1,4 @@
+// All room related REDUX steps will be listed here
 import {
   ALL_ROOMS_SUCCESS,
   ALL_ROOMS_FAIL,
