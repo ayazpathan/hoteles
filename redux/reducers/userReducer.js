@@ -1,3 +1,4 @@
+// This is user reducer
 import {
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
