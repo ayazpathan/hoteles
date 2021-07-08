@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
 import ButtonLoader from "../Layout/ButtonLoader";
-import Loader from "../Layout/Loader";
 
 import { useDispatch, useSelector } from "react-redux";
 import { forgotPassword, clearError } from "../../redux/actions/userActions";

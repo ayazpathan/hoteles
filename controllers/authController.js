@@ -1,13 +1,12 @@
 import User from "../models/user";
 import ErrorHandler from "../utils/errorHandler";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
-import APIFeatures from "../utils/apiFeatures";
-import cloudinary from "cloudinary";
 
+import cloudinary from "cloudinary";
 import sendEmail from "../utils/sendEmails";
 
 import absoluteUrl from "next-absolute-url";
-import next from "next";
+import crypto from "crypto";
 
 // Setting up cludinary config
 cloudinary.config({
