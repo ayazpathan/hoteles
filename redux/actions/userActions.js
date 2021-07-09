@@ -101,7 +101,7 @@ export const forgotPassword = (email) => async (dispatch) => {
   }
 };
 
-// Reset Password
+// Reset Password (this is the password reset action)
 export const resetPassword = (token, password) => async (dispatch) => {
   try {
     dispatch({ type: RESET_PASSWORD_REQUEST });
