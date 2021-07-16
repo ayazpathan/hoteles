@@ -2,6 +2,8 @@ import Register from "../components/auth/Register";
 import Layout from "../components/Layout/Layout";
 import { getSession } from "next-auth/client";
 
+/* Register user functionalities */
+
 export default function RegisterPage() {
   return (
     <Layout title="Login">
