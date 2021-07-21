@@ -15,9 +15,35 @@ const bookingSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  checkOutDate: {
+    type: Date,
+    required: true,
+  },
   amoutPaid: {
     type: Number,
     required: true,
+  },
+  daysOfStay: {
+    type: Number,
+    required: true,
+  },
+  paymentInfo: {
+    id: {
+      type: String,
+      required: true,
+    },
+    status: {
+      type: String,
+      required: true,
+    },
+  },
+  paidAt: {
+    type: Date,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
 });
 
