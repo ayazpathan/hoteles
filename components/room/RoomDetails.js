@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -11,12 +12,16 @@ import { clearError } from "../../redux/actions/roomActions";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import axios from "axios";
+
 const RoomDetails = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const { room, error } = useSelector((state) => state.roomDetails);
 
   const [checkInDate, setCheckInDate] = useState();
   const [checkOutDate, setCheckOutDate] = useState();
+  const [daysOfStay, setDaysOfStay] = useState();
 
   const onChange = (dates) => {
     const [checkInDate, checkOutDate] = dates;
@@ -24,7 +29,40 @@ const RoomDetails = () => {
     setCheckOutDate(checkOutDate);
 
     if (checkInDate && checkOutDate) {
-      console.log(checkInDate.toISOString(), checkOutDate.toISOString());
+      // calculate days of stay
+      const days = Math.floor(
+        (new Date(checkOutDate) - new Date(checkInDate)) / 86400000 + 1
+      );
+      setDaysOfStay(days);
+    }
+  };
+
+  const newBookingHandler = async () => {
+    const bookingData = {
+      room: router.query.id,
+      checkInDate,
+      checkOutDate,
+      daysOfStay,
+      amountPaid: 90,
+      paymentInfo: {
+        id: "PAYMENT_ID",
+        status: "PAYMENT_STATUS",
+      },
+    };
+
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const { data } = await axios.post("/api/bookings", bookingData, config);
+
+      console.log("BOOKING DATA");
+      console.log(data);
+    } catch (error) {
+      console.log(error.response);
     }
   };
 
@@ -58,7 +96,7 @@ const RoomDetails = () => {
               <Carousel.Item key={image.public_id}>
                 <div style={{ width: "100%", height: "540px" }}>
                   <Image
-                    classname="d-block m-auto"
+                    className="d-block m-auto"
                     src={image.url}
                     alt={room.name}
                     layout="fill"
@@ -93,7 +131,12 @@ const RoomDetails = () => {
                 inline
               />
 
-              <button className="btn btn-block py-3 booking-btn">Pay</button>
+              <button
+                className="btn btn-block py-3 booking-btn"
+                onClick={newBookingHandler}
+              >
+                Pay
+              </button>
             </div>
           </div>
         </div>

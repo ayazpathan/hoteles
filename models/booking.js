@@ -19,7 +19,7 @@ const bookingSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  amoutPaid: {
+  amountPaid: {
     type: Number,
     required: true,
   },
@@ -48,4 +48,4 @@ const bookingSchema = new mongoose.Schema({
 });
 
 export default mongoose.models.Booking ||
-  mongoose.models("Booking", bookingSchema);
+  mongoose.model("Booking", bookingSchema);
