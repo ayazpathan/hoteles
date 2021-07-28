@@ -9,7 +9,10 @@ import { Carousel } from "react-bootstrap";
 import RoomFeatures from "./RoomFeatures";
 import { clearError } from "../../redux/actions/roomActions";
 
-import { checkBooking } from "../../redux/actions/bookingActions";
+import {
+  checkBooking,
+  getBookedDates,
+} from "../../redux/actions/bookingActions";
 import { CHECK_BOOKING_REQUEST } from "../../redux/constants/bookingConstants";
 
 import DatePicker from "react-datepicker";
@@ -21,6 +24,7 @@ const RoomDetails = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const { dates } = useSelector((state) => state.bookedDates);
   const { user } = useSelector((state) => state.loadedUser);
   const { room, error } = useSelector((state) => state.roomDetails);
   const { available, loading: bookingLoading } = useSelector(
@@ -30,6 +34,14 @@ const RoomDetails = () => {
   const [checkInDate, setCheckInDate] = useState();
   const [checkOutDate, setCheckOutDate] = useState();
   const [daysOfStay, setDaysOfStay] = useState();
+  const [id, setId] = useState(router.query.id);
+
+  const excludedDates = [];
+  if (dates) {
+    dates.forEach((date) => {
+      excludedDates.push(new Date(date));
+    });
+  }
 
   const onChange = (dates) => {
     const [checkInDate, checkOutDate] = dates;
@@ -48,8 +60,6 @@ const RoomDetails = () => {
       );
     }
   };
-
-  const { id } = router.query;
 
   const newBookingHandler = async () => {
     const bookingData = {
@@ -81,9 +91,10 @@ const RoomDetails = () => {
   };
 
   useEffect(() => {
+    dispatch(getBookedDates(id));
     toast.error(error);
     dispatch(clearError());
-  }, []);
+  }, [dispatch, id]);
 
   return (
     <>
@@ -142,6 +153,7 @@ const RoomDetails = () => {
                 startDate={checkInDate}
                 endDate={checkOutDate}
                 minDate={new Date()}
+                excludeDates={excludedDates}
                 selectsRange
                 inline
               />

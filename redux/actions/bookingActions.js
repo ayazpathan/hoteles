@@ -5,6 +5,8 @@ import {
   CHECK_BOOKING_REQUEST,
   CHECK_BOOKING_SUCCESS,
   CHECK_BOOKING_FAIL,
+  BOOKED_DATES_SUCCESS,
+  BOOKED_DATES_FAIL,
 } from "../constants/bookingConstants";
 
 // Check booking
@@ -25,6 +27,22 @@ export const checkBooking =
       });
     }
   };
+
+// Get booked dates
+export const getBookedDates = (id) => async (dispatch) => {
+  try {
+    const { data } = await axios.get(
+      `/api/bookings/check_booked_dates?roomId=${id}`
+    );
+
+    dispatch({ type: BOOKED_DATES_SUCCESS, payload: data.bookedDates });
+  } catch (error) {
+    dispatch({
+      type: BOOKED_DATES_FAIL,
+      payload: error,
+    });
+  }
+};
 
 // Clear Errors
 export const clearError = () => async (dispatch) => {
