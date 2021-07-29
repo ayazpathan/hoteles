@@ -102,4 +102,19 @@ const checkBookedDatesOfRoom = catchAsyncErrors(async (req, res) => {
   });
 });
 
-export { newBooking, checkRoomBookingAvailability, checkBookedDatesOfRoom };
+// Get all boooking of current user
+const myBookings = catchAsyncErrors(async (req, res) => {
+  const bookings = await Booking.find({ user: req.user._id });
+
+  res.status(200).json({
+    success: true,
+    bookings,
+  });
+});
+
+export {
+  newBooking,
+  checkRoomBookingAvailability,
+  checkBookedDatesOfRoom,
+  myBookings,
+};
