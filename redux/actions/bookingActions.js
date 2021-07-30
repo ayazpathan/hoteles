@@ -7,6 +7,8 @@ import {
   CHECK_BOOKING_FAIL,
   BOOKED_DATES_SUCCESS,
   BOOKED_DATES_FAIL,
+  MY_BOOKINGS_SUCCESS,
+  MY_BOOKINGS_FAIL,
 } from "../constants/bookingConstants";
 
 // Check booking
@@ -44,6 +46,19 @@ export const getBookedDates = (id) => async (dispatch) => {
   }
 };
 
+// Get bookings
+export const myBookings = () => async (dispatch) => {
+  try {
+    const { data } = await axios.get(`/api/bookings/me`);
+
+    dispatch({ type: MY_BOOKINGS_SUCCESS, payload: data.bookedDates });
+  } catch (error) {
+    dispatch({
+      type: MY_BOOKINGS_FAIL,
+      payload: error,
+    });
+  }
+};
 // Clear Errors
 export const clearError = () => async (dispatch) => {
   dispatch({
