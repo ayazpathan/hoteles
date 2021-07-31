@@ -47,11 +47,21 @@ export const getBookedDates = (id) => async (dispatch) => {
 };
 
 // Get bookings
-export const myBookings = () => async (dispatch) => {
+export const myBookings = (authCookie, req) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/bookings/me`);
+    const { origin } = absoluteUrl(req);
 
-    dispatch({ type: MY_BOOKINGS_SUCCESS, payload: data.bookedDates });
+    const config = {
+      headers: {
+        cookie: authCookie,
+      },
+    };
+    const { data } = await axios.get(`${origin}/api/bookings/me`, config);
+
+    console.log("DATA RETURED");
+    console.log(data);
+
+    dispatch({ type: MY_BOOKINGS_SUCCESS, payload: data.bookings });
   } catch (error) {
     dispatch({
       type: MY_BOOKINGS_FAIL,
