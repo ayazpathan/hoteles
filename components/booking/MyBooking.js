@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 import { clearError } from "../../redux/actions/bookingActions";
 import { MDBDataTable } from "mdbreact";
+import easyinvoice from "easyinvoice";
 
 const MyBooking = () => {
   const dispatch = useDispatch();
@@ -78,66 +79,50 @@ const MyBooking = () => {
 
   const downloadInvoice = async (booking) => {
     const data = {
-      "documentTitle": "Booking Invoice", //Defaults to INVOICE
+      documentTitle: "Booking Invoice", //Defaults to INVOICE
       //"locale": "de-DE", //Defaults to en-US, used for number formatting (see docs)
-      "currency": "INR", //See documentation 'Locales and Currency' for more info
-      "taxNotation": "vat", //or gst
-      "marginTop": 25,
-      "marginRight": 25,
-      "marginLeft": 25,
-      "marginBottom": 25,
-      "logo": "https://public.easyinvoice.cloud/img/logo_en_original.png", //or base64
-      "background": "https://public.easyinvoice.cloud/img/watermark-draft.jpg", //or base64 //img or pdf
-      "sender": {
-          "company": "Sample Corp",
-          "address": "Sample Street 123",
-          "zip": "1234 AB",
-          "city": "Sampletown",
-          "country": "Samplecountry"
-          //"custom1": "custom value 1",
-          //"custom2": "custom value 2",
-          //"custom3": "custom value 3"
+      currency: "INR", //See documentation 'Locales and Currency' for more info
+      taxNotation: "vat", //or gst
+      marginTop: 25,
+      marginRight: 25,
+      marginLeft: 25,
+      marginBottom: 25,
+      logo: "https://res.cloudinary.com/dxjzhrrw0/image/upload/v1627926838/hoteles/logo/hoteles.png_rlh5a3.png", //or base64
+      sender: {
+        company: "Hoteles",
+        address: "Welworth Avenue, Wessex, 47 W Green St",
+        zip: "10001",
+        city: "London",
+        country: "Canada",
       },
-      "client": {
-           "company": "Client Corp",
-           "address": "Clientstreet 456",
-           "zip": "4567 CD",
-           "city": "Clientcity",
-           "country": "Clientcountry"
-          //"custom1": "custom value 1",
-          //"custom2": "custom value 2",
-          //"custom3": "custom value 3"
+      client: {
+        company: `${booking.user.name}`,
+        address: `${booking.user.email}`,
+        zip: "",
+        city: `Check In: ${new Date(booking.checkInDate).toLocaleString(
+          "en-US"
+        )}`,
+        country: `Check In: ${new Date(booking.checkOutDate).toLocaleString(
+          "en-US"
+        )}`,
       },
-      "invoiceNumber": "2021.0001",
-      "invoiceDate": "1.1.2021",
-      "products": [
-          {
-              "quantity": "2",
-              "description": "Test1",
-              "tax": 6,
-              "price": 33.87
-          },
-          {
-              "quantity": "4",
-              "description": "Test2",
-              "tax": 21,
-              "price": 10.45
-          }
+      invoiceNumber: `${booking._id}`,
+      invoiceDate: `${new Date(Date.now()).toLocaleString("en-US")}`,
+      products: [
+        {
+          quantity: `${booking.daysOfStay}`,
+          description: `${booking.room.name}`,
+          tax: 1,
+          price: booking.room.pricePerNight,
+        },
       ],
-      "bottomNotice": "Kindly pay your invoice within 15 days.",
-      //Used for translating the headers to your preferred language
-      //Defaults to English. Below example is translated to Dutch
-      // "translate": { 
-      //     "invoiceNumber": "Factuurnummer",
-      //     "invoiceDate": "Factuurdatum",
-      //     "products": "Producten", 
-      //     "quantity": "Aantal", 
-      //     "price": "Prijs",
-      //     "subtotal": "Subtotaal",
-      //     "total": "Totaal" 
-      // }
+      bottomNotice:
+        "This is auto generated invoice of your booking with Hoteles.",
+    };
+
+    const result = await easyinvoice.createInvoice(data);
+    easyinvoice.download(`Invoice_${booking._id}.pdf`, result.pdf);
   };
-  }
 
   return (
     <div className="container container-fluid">
