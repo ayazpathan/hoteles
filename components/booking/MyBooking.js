@@ -66,7 +66,12 @@ const MyBooking = () => {
                   <i className="fa fa-eye"></i>
                 </a>
               </Link>
-              <button className="btn btn-success mx-2">
+              <button
+                className="btn btn-success mx-2"
+                onClick={() => {
+                  downloadInvoice(booking);
+                }}
+              >
                 <i className="fa fa-download"></i>
               </button>
             </>
