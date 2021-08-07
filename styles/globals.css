@@ -15,6 +15,11 @@ body {
 
 /* Scroll Bar */
 
+.logo_site_origional {
+  height: 35px;
+  width: 220px;
+}
+
 .logo-site {
   color: #ff385c;
   font-size: 30px;
@@ -79,7 +84,6 @@ body {
 }
 
 .explore-img-container {
-  
 }
 
 ::-webkit-scrollbar-track {

@@ -22,9 +22,11 @@ const Header = () => {
         <div className="col-3 p-0">
           <div className="navbar-brand">
             <Link href="/">
-              <span className="logo-site" title="Hoteles">
-                Hoteles
-              </span>
+              <img
+                className="logo_site_origional"
+                src="https://res.cloudinary.com/dxjzhrrw0/image/upload/v1627926838/hoteles/logo/hoteles.png_rlh5a3.png"
+                alt="BookIT"
+              />
             </Link>
           </div>
         </div>
