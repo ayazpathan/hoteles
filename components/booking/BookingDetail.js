@@ -10,6 +10,7 @@ import { clearError } from "../../redux/actions/bookingActions";
 const BookingDetail = () => {
   const dispatch = useDispatch();
 
+  // Displays booking detail
   const { booking, error } = useSelector((state) => state.bookingDetails);
 
   useEffect(() => {
