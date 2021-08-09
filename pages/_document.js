@@ -10,6 +10,12 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <link
+            rel="preload"
+            href="http://fonts.cdnfonts.com/css/airbnb-cereal-app"
+            rel="stylesheet"
+            as="font"
+          />
+          <link
             rel="stylesheet"
             type="text/css"
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
