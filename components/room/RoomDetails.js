@@ -13,8 +13,9 @@ import {
   checkBooking,
   getBookedDates,
 } from "../../redux/actions/bookingActions";
-import { CHECK_BOOKING_REQUEST } from "../../redux/constants/bookingConstants";
+import { CHECK_BOOKING_RESET } from "../../redux/constants/bookingConstants";
 
+import getStripe from "../../utils/getStripe";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -34,6 +35,7 @@ const RoomDetails = () => {
   const [checkInDate, setCheckInDate] = useState();
   const [checkOutDate, setCheckOutDate] = useState();
   const [daysOfStay, setDaysOfStay] = useState();
+  const [paymentLoading, setPaymentLoading] = useState(false);
   const [id, setId] = useState(router.query.id);
 
   const excludedDates = [];
@@ -82,11 +84,30 @@ const RoomDetails = () => {
       };
 
       const { data } = await axios.post("/api/bookings", bookingData, config);
-
-      console.log("BOOKING DATA");
-      console.log(data);
     } catch (error) {
       console.log(error.response);
+    }
+  };
+
+  const bookRoom = async (id, pricePerNight) => {
+    setPaymentLoading(true);
+
+    const amount = pricePerNight * daysOfStay;
+
+    try {
+      const link = `/api/checkout_session/${id}?checkIndate=${checkInDate.toISOString()}&?checkOutdate=${checkOutDate.toISOString()}&daysOfStay=${daysOfStay}`;
+
+      const { data } = await axios.get(link, { params: { amount } });
+
+      const stripe = await getStripe();
+
+      // Redirect to checkout
+      stripe.redirectToCheckout({ sessionId: data.id });
+      setPaymentLoading(false);
+    } catch (error) {
+      setPaymentLoading(false);
+      console.log(error);
+      toast.error(error.message);
     }
   };
 
@@ -94,6 +115,10 @@ const RoomDetails = () => {
     dispatch(getBookedDates(id));
     toast.error(error);
     dispatch(clearError());
+
+    return () => {
+      dispatch({ type: CHECK_BOOKING_RESET });
+    };
   }, [dispatch, id]);
 
   return (
@@ -179,9 +204,10 @@ const RoomDetails = () => {
               {available && user && (
                 <button
                   className="btn btn-block py-3 booking-btn"
-                  onClick={newBookingHandler}
+                  onClick={() => bookRoom(room._id, room.pricePerNight)}
+                  disabled={bookingLoading || paymentLoading ? true : false}
                 >
-                  Pay
+                  Pay - ₹{daysOfStay * room.pricePerNight}
                 </button>
               )}
             </div>
