@@ -2,11 +2,6 @@ module.exports = {
   env: {
     DB_LOCAL_URI:
       "mongodb+srv://azzzpathan:lW8Mt3y0G8hvFNP1@cluster0.k4frq.mongodb.net/hotele?retryWrites=true&w=majority",
-    STRIPE_API_KEY:
-      "pk_test_51JMxzqSEn1BvKFH7eLnUwiCJk7KxH4kxxjNlmSMgNMtfYFsjXVFfU4l2uNdOALeqTpvr6X7NikqUfADt6Vfp2E4R00TTAXUnjU",
-    STRIPE_SECRET_KEY:
-      "sk_test_51JMxzqSEn1BvKFH7AF9N7EUd8JN8j3oxtSZNkBjj6I9a6hCU2DmpsaGrmu9QY5lgjtsnWd3eFx9JmmxCqBhQXwsJ00HAW5CrLI",
-    STRIPE_WEBHOOK_SECRET: "whsec_dW27lJGMV7hELjbM3IeuZVSvVq31CmtX",
     CLOUDINARY_CLOUD_NAME: "dxjzhrrw0",
     CLOUDINARY_API_KEY: "593448836129174",
     CLOUDINARY_API_SECRET: "HHCg4D9MdsgOJfrBANxFz6G5et4",
