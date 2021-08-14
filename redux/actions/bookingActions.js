@@ -60,9 +60,6 @@ export const myBookings = (authCookie, req) => async (dispatch) => {
     };
     const { data } = await axios.get(`${origin}/api/bookings/me`, config);
 
-    console.log("DATA RETURED");
-    console.log(data);
-
     dispatch({ type: MY_BOOKINGS_SUCCESS, payload: data.bookings });
   } catch (error) {
     dispatch({
