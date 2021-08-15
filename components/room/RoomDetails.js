@@ -95,7 +95,7 @@ const RoomDetails = () => {
     const amount = pricePerNight * daysOfStay;
 
     try {
-      const link = `/api/checkout_session/${id}?checkIndate=${checkInDate.toISOString()}&?checkOutdate=${checkOutDate.toISOString()}&daysOfStay=${daysOfStay}`;
+      const link = `/api/checkout_session/${id}?checkInDate=${checkInDate.toISOString()}&checkOutDate=${checkOutDate.toISOString()}&daysOfStay=${daysOfStay}`;
 
       const { data } = await axios.get(link, { params: { amount } });
 

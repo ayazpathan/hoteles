@@ -14,7 +14,7 @@ const stripeCheckoutSession = catchAsyncErrors(async (req, res) => {
   // Get room details
   const room = await Room.findById(req.query.roomid);
 
-  const { checkIndate, checkOutDate, daysOfStay } = req.query;
+  const { checkInDate, checkOutDate, daysOfStay } = req.query;
 
   // Get origin
   const { origin } = sbsoluteUrl(req);
@@ -27,7 +27,7 @@ const stripeCheckoutSession = catchAsyncErrors(async (req, res) => {
     customer_email: req.user.email,
     client_reference_id: req.query.roomid,
     metadata: {
-      checkIndate,
+      checkInDate,
       checkOutDate,
       daysOfStay,
     },
@@ -47,9 +47,6 @@ const stripeCheckoutSession = catchAsyncErrors(async (req, res) => {
 
 // Create new booking after payment => /api/webhook
 const webhookCheckout = catchAsyncErrors(async (req, res) => {
-  console.log(
-    ">>>>>>>>>>>>>>>>>>>>>>> In WEBHOOK controller >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-  );
   const rawBody = await getRawBody(req);
   try {
     const signature = req.headers["stripe-signature"];
@@ -59,8 +56,8 @@ const webhookCheckout = catchAsyncErrors(async (req, res) => {
       process.env.STRIPE_WEBHOOK_SECRET
     );
 
-    if (event.type === "checkout.session.complete") {
-      const session = event.daysOfStay.object;
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object;
       const room = session.client_reference_id;
       const user = (await User.findOne({ email: session.customer_email })).id;
 
@@ -70,7 +67,7 @@ const webhookCheckout = catchAsyncErrors(async (req, res) => {
         status: session.payment_status,
       };
 
-      const checkInDate = session.metadata.checkIndate;
+      const checkInDate = session.metadata.checkInDate;
       const checkOutDate = session.metadata.checkOutDate;
       const daysOfStay = session.metadata.daysOfStay;
 
@@ -84,11 +81,9 @@ const webhookCheckout = catchAsyncErrors(async (req, res) => {
         paymentInfo,
         paidAt: Date.now(),
       });
-
-      console.log("Booking Created");
     }
   } catch (error) {
-    console.log(`ERROR while booking`);
+    console.log(`ERROR while booking ${error}`);
   }
 
   res.status(200).json({

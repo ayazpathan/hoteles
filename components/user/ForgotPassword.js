@@ -16,8 +16,6 @@ const ForgotPassword = () => {
   );
 
   useEffect(() => {
-    console.log("ERROR");
-    console.log(error);
     if (error) {
       toast.error(error);
       dispatch(clearError());
