@@ -8,6 +8,7 @@ import Image from "next/image";
 import { Carousel } from "react-bootstrap";
 import RoomFeatures from "./RoomFeatures";
 import { clearError } from "../../redux/actions/roomActions";
+import NewReview from "../review/NewReview";
 
 import {
   checkBooking,
@@ -213,6 +214,8 @@ const RoomDetails = () => {
             </div>
           </div>
         </div>
+
+        <NewReview />
 
         <div className="reviews w-75">
           <h3>Reviews:</h3>
