@@ -38,6 +38,42 @@ const NewReview = () => {
     dispatch(newReview(reviewData));
   };
 
+  function setUserRating() {
+    const stars = document.querySelectorAll(".star");
+    stars.forEach((star, index) => {
+      star.starValue = index + 1;
+      ["click", "mouseover", "mouseout"].forEach(function (e) {
+        star.addEventListener(e, showRatings);
+      });
+    });
+
+    function showRatings(e) {
+      stars.forEach((star, index) => {
+        if (e.type === "click") {
+          if (index < this.starValue) {
+            star.classList.add("red");
+
+            setRating(this.starValue);
+          } else {
+            star.classList.remove("red");
+          }
+        }
+
+        if (e.type === "mouseover") {
+          if (index < this.starValue) {
+            star.classList.add("light-red");
+          } else {
+            star.classList.remove("light-red");
+          }
+        }
+
+        if (e.type === "mouseout") {
+          star.classList.remove("light-red");
+        }
+      });
+    }
+  }
+
   return (
     <>
       <button
@@ -46,6 +82,7 @@ const NewReview = () => {
         className="btn btn-primary mt-4 mb-5"
         data-toggle="modal"
         data-target="#ratingModal"
+        onClick={setUserRating}
       >
         Submit Your Review
       </button>
@@ -108,6 +145,7 @@ const NewReview = () => {
                 className="btn my-3 float-right review-btn px-4 text-white"
                 data-dismiss="modal"
                 aria-label="Close"
+                onClick={submitHandler}
               >
                 Submit
               </button>
