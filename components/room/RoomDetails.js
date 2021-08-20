@@ -9,6 +9,7 @@ import { Carousel } from "react-bootstrap";
 import RoomFeatures from "./RoomFeatures";
 import { clearError } from "../../redux/actions/roomActions";
 import NewReview from "../review/NewReview";
+import ListReviews from "../review/ListReviews";
 
 import {
   checkBooking,
@@ -217,29 +218,13 @@ const RoomDetails = () => {
 
         <NewReview />
 
-        <div className="reviews w-75">
-          <h3>Reviews:</h3>
-          <hr />
-          <div className="review-card my-3">
-            <div className="rating-outer">
-              <div className="rating-inner"></div>
-            </div>
-            <p className="review_user">by John</p>
-            <p className="review_comment">Good Quality</p>
-
-            <hr />
-          </div>
-
-          <div className="review-card my-3">
-            <div className="rating-outer">
-              <div className="rating-inner"></div>
-            </div>
-            <p className="review_user">by John</p>
-            <p className="review_comment">Good Quality</p>
-
-            <hr />
-          </div>
-        </div>
+        {room.reviews && room.reviews.length > 0 ? (
+          <ListReviews reviews={room.reviews} />
+        ) : (
+          <p>
+            <b>No review have been found in this room</b>
+          </p>
+        )}
       </div>
     </>
   );

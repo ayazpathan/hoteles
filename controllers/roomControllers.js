@@ -77,7 +77,7 @@ const deleteRoom = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: "Room has successflyy ben deleted",
+    message: "Room has successfully ben deleted",
   });
 });
 
@@ -118,7 +118,7 @@ const createRoomReview = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: "Room has successflyy ben deleted",
+    message: "Review has been successfully posted",
   });
 });
 
