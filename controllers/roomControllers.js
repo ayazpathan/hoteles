@@ -1,4 +1,5 @@
 import Room from "../models/room";
+import Booking from "../models/booking";
 
 import ErrorHandler from "../utils/errorHandler";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
@@ -122,6 +123,23 @@ const createRoomReview = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+// Check review => api/reviews/check_review_availablity
+const checkReviewAvailability = catchAsyncErrors(async (req, res, next) => {
+  const { roomId } = req.query;
+  const bookings = await Booking.find({ user: req.user._id, room: roomId });
+
+  let isReviewAvailable = false;
+
+  if (bookings.length > 0) isReviewAvailable = true;
+
+  res.status(200).json({
+    isReviewAvailable,
+    message: `Review for the room is ${
+      isReviewAvailable === true ? "available" : "not available"
+    }`,
+  });
+});
+
 export {
   allRoom,
   newRoom,
@@ -129,4 +147,5 @@ export {
   updateRoom,
   deleteRoom,
   createRoomReview,
+  checkReviewAvailability,
 };

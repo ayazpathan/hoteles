@@ -3,7 +3,11 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
 import { useDispatch, useSelector } from "react-redux";
-import { newReview, clearError } from "../../redux/actions/roomActions";
+import {
+  newReview,
+  checkReviewAvaiilability,
+  clearError,
+} from "../../redux/actions/roomActions";
 import { NEW_REVIEW_RESET } from "../../redux/constants/roomConstants";
 
 const NewReview = () => {
@@ -14,10 +18,14 @@ const NewReview = () => {
   const router = useRouter();
 
   const { error, success } = useSelector((state) => state.newReview);
+  const { reviewAvailable } = useSelector((state) => state.checkReview);
 
   const { id } = router.query;
 
   useEffect(() => {
+    if (id !== undefined) {
+      dispatch(checkReviewAvaiilability(id));
+    }
     if (error) {
       toast.error(error);
       dispatch(clearError());
@@ -26,7 +34,7 @@ const NewReview = () => {
       toast.success("Review has been posted successfully");
       dispatch({ type: NEW_REVIEW_RESET });
     }
-  }, [dispatch, success, error]);
+  }, [dispatch, success, error, id]);
 
   const submitHandler = () => {
     const reviewData = {
@@ -76,16 +84,18 @@ const NewReview = () => {
 
   return (
     <>
-      <button
-        id="review_btn"
-        type="button"
-        className="btn btn-primary mt-4 mb-5"
-        data-toggle="modal"
-        data-target="#ratingModal"
-        onClick={setUserRating}
-      >
-        Submit Your Review
-      </button>
+      {reviewAvailable && (
+        <button
+          id="review_btn"
+          type="button"
+          className="btn btn-primary mt-4 mb-5"
+          data-toggle="modal"
+          data-target="#ratingModal"
+          onClick={setUserRating}
+        >
+          Submit Your Review
+        </button>
+      )}
 
       <div
         className="modal fade"
