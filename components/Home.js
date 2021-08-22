@@ -26,7 +26,7 @@ const Home = () => {
   page = Number(page);
 
   const handlePagination = (pageNumber) => {
-    window.location.href = `/?page=${pageNumber}`;
+    router.push(`/?page=${pageNumber}`);
   };
 
   let count = roomsCount;
@@ -36,6 +36,12 @@ const Home = () => {
 
   return (
     <>
+      <div>
+        <img
+          className="main-landing-image"
+          src="https://res.cloudinary.com/dxjzhrrw0/image/upload/v1629553557/hoteles/pictures/CoverCartoon_g4d022.webp"
+        />
+      </div>
       <ExploreRoom />
       <section id="rooms" className="container mt-5">
         <h2 className="mb-3 ml-2 stays-heading">

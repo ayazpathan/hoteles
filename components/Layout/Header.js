@@ -23,16 +23,19 @@ const Header = () => {
           <div className="navbar-brand">
             <Link href="/">
               <img
-                className="logo_site_origional"
-                src="https://res.cloudinary.com/dxjzhrrw0/image/upload/v1627926838/hoteles/logo/hoteles.png_rlh5a3.png"
-                alt="BookIT"
+                className="logo_site_origional hover"
+                src="https://res.cloudinary.com/dxjzhrrw0/image/upload/v1629557187/hoteles/logo/hoteles-logo_xrdl6g.png"
+                alt="hoteles"
               />
             </Link>
           </div>
         </div>
 
-        <div className="search-container-ab">
-          <div className="search-btn-container"></div>
+        <div className="search-container-ab hover">
+          <span>Start your search</span>
+          <div className="search-btn-container">
+            <img src="/images/search.svg" />
+          </div>
         </div>
 
         <div className="col-3 mt-3 mt-md-0 text-center">

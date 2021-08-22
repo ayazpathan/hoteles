@@ -38,5 +38,8 @@
     "redux-thunk": "^2.3.0",
     "stripe": "^8.168.0",
     "validator": "^13.6.0"
+  },
+  "devDependencies": {
+    "@svgr/webpack": "^5.5.0"
   }
 }

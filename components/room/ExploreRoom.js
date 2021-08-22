@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import ImageOptimized from "../image/ImageOptimized";
 
 const ExploreRoom = () => {
   return (
@@ -10,11 +10,11 @@ const ExploreRoom = () => {
           <div className="explore-container">
             <div className="explore-item">
               <div className="explore-img-container">
-                <Image
-                  className="explore-im"
-                  src="/images/Mumbai.jpg"
+                <ImageOptimized
+                  url={"/images/Mumbai.jpg"}
                   height={80}
                   width={80}
+                  placeholder={"image-placeholder"}
                 />
               </div>
               <div className="explore-text-container">
@@ -27,11 +27,11 @@ const ExploreRoom = () => {
           <div className="explore-container">
             <div className="explore-item">
               <div className="explore-img-container">
-                <Image
-                  className="explore-im"
-                  src="/images/Vadodra.jpg"
+                <ImageOptimized
+                  url={"/images/Vadodra.jpg"}
                   height={80}
                   width={80}
+                  placeholder={"image-placeholder"}
                 />
               </div>
               <div className="explore-text-container">
@@ -44,11 +44,11 @@ const ExploreRoom = () => {
           <div className="explore-container">
             <div className="explore-item">
               <div className="explore-img-container">
-                <Image
-                  className="explore-im"
-                  src="/images/Daman.jpg"
+                <ImageOptimized
+                  url={"/images/Daman.jpg"}
                   height={80}
                   width={80}
+                  placeholder={"image-placeholder"}
                 />
               </div>
               <div className="explore-text-container">
@@ -61,11 +61,11 @@ const ExploreRoom = () => {
           <div className="explore-container">
             <div className="explore-item">
               <div className="explore-img-container">
-                <Image
-                  className="explore-im"
-                  src="/images/Surat.jpg"
+                <ImageOptimized
+                  url={"/images/Surat.jpg"}
                   height={80}
                   width={80}
+                  placeholder={"image-placeholder"}
                 />
               </div>
               <div className="explore-text-container">
@@ -78,11 +78,11 @@ const ExploreRoom = () => {
           <div className="explore-container">
             <div className="explore-item">
               <div className="explore-img-container">
-                <Image
-                  className="explore-im"
-                  src="/images/Ahmedabad.jpg"
+                <ImageOptimized
+                  url={"/images/Ahmedabad.jpg"}
                   height={80}
                   width={80}
+                  placeholder={"image-placeholder"}
                 />
               </div>
               <div className="explore-text-container">
