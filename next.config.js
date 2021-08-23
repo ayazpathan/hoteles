@@ -1,3 +1,5 @@
+// this is custom config file for the project
+
 module.exports = {
   env: {
     SMTP_HOST: "smtp.mailtrap.io",
